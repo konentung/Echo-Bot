@@ -1,3 +1,2 @@
-python==3.11.7
 line-bot-sdk==3.7.0
 flask==3.0.0
