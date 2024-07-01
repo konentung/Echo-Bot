@@ -24,7 +24,7 @@ app = Flask(__name__)
 CHANNEL_ACCESS_TOKEN = os.getenv("CHANNEL_ACCESS_TOKEN")
 CHANNEL_SECRET = os.getenv("CHANNEL_SECRET")
     
-handler = WebhookHandler(CHANNEL_SECRET)
+line_handler = WebhookHandler(CHANNEL_SECRET)
 
 configuration = Configuration(
     access_token=CHANNEL_ACCESS_TOKEN
@@ -40,12 +40,12 @@ def callback():
 
     # parse webhook body
     try:
-        handler.handle(body, signature)
+        line_handler.handle(body, signature)
     except InvalidSignatureError:
         abort(400)
     return 'OK'
 
-@handler.add(MessageEvent, message=TextMessageContent)
+@line_handler.add(MessageEvent, message=TextMessageContent)
 def handle_messsage(event):
     messages = []
     messages.append(TextMessage(text=event.message.text))
